@@ -3,6 +3,20 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 const { authenticateJwt, SECRET } = require("../middleware/auth");
 const { Course, Admin } = require("../db");
+import {z} from "zod";
+
+ const signupInput = z.object({
+    username: z.string().min(10).max(50).email(),
+    password: z.string().min(6).max(15)
+})
+
+const loginInput = z.object({
+  username: z.string().min(10).max(50).email(),
+  password: z.string().min(6).max(15)
+})
+
+
+//  type SignupParams = z.infer<typeof signupInput>;
 
 
 const router = express.Router();
@@ -20,8 +34,13 @@ router.get("/me", authenticateJwt, async (req: Request, res: Response) => {
 });
 
 router.post('/signup', async (req: Request, res: Response) => {
-  const {username, password} = req.body;
-  const admin = await Admin.findOne({username});
+  let parsedInput = signupInput.safeParse(req.body);
+  if(!parsedInput.success){
+    return res.status(403).json({msg: "error"});
+  }  
+  const username = parsedInput.data.username;
+  const password = parsedInput.data.password;
+  const admin = await Admin.findOne({username:parsedInput.data.username});
   if(admin){
     res.json({message:'Admin already exists'});
   } else {
