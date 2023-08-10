@@ -21,8 +21,8 @@ function Courses() {
     }, []);
 
     return <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
-        {courses.map(course => {
-            return <Course course={course} />}
+        {courses.map((course,index) => {
+            return <Course key={index} course={course} />}
         )}
     </div>
 }

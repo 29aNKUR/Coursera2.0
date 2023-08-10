@@ -7,3 +7,4 @@ export const courseState = atom({
     course: null
   },
 });
+

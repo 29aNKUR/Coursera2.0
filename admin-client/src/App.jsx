@@ -19,7 +19,7 @@ function App() {
     return (
         <RecoilRoot>
             <div style={{width: "100vw",
-                height: "100vh",
+            height:"100vh",
                 backgroundColor: "#eeeeee"}}
             >
                     <Router>

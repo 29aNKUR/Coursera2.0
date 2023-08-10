@@ -1,9 +1,8 @@
-import { userState } from "../atoms/user";
 import {selector} from "recoil";
 import { courseState } from "../atoms/course";
 
 export const isCourseLoading = selector({
-  key: 'isCourseLoaingState',
+  key: 'isCourseLoadingState',
   get: ({get}) => {
     const state = get(courseState);
 
